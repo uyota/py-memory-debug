@@ -1,0 +1,2 @@
+% python getsizeof_test.py
+24
