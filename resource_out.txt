@@ -1,0 +1,5 @@
+% python resource_test.py
+resource.struct_rusage(ru_utime=0.014362, ru_stime=0.007181, ru_maxrss=6092, ru_ixrss=12, ru_idrss=12, ru_isrss=384, ru_minflt=616, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=1, ru_nivcsw=1)
+6092
+resource.struct_rusage(ru_utime=0.021367, ru_stime=0.0072039999999999995, ru_maxrss=6940, ru_ixrss=16, ru_idrss=16, ru_isrss=512, ru_minflt=916, ru_majflt=0, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=1, ru_nivcsw=1)
+6940
