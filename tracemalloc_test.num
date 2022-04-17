@@ -1,0 +1,26 @@
+     1	import tracemalloc
+     2	
+     3	
+     4	tracemalloc.start()
+     5	
+     6	class MemEater:
+     7	    def __init__(self):
+     8	        self._dict = dict()
+     9	        self._all = ""
+    10	
+    11	    def eat(self, n: int):
+    12	        for i in range(n):
+    13	            self._dict[i] = str(i)
+    14	        self._all = " ".join(self._dict.values())
+    15	
+    16	
+    17	e = MemEater()
+    18	e.eat(12345)
+    19	
+    20	snapshot = tracemalloc.take_snapshot()
+    21	
+    22	top_stats = snapshot.statistics("lineno")
+    23	
+    24	print("[ Top 10 ]")
+    25	for stat in top_stats[:10]:
+    26	    print(stat)

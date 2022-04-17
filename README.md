@@ -2,6 +2,7 @@
 
 ## Memory Profilers
 
+1. [tracemallloc](#tracemalloc)
 1. [resource.getrusage](#resourcesgetrusage)
 1. [sys.getsizeof](#sysgetsizeof)
 
@@ -9,6 +10,66 @@
 * FreeBSD 13.1-RELEASE
 * Python 3.8.12
 * `black` formatter
+
+## [tracemalloc](https://docs.python.org/3/library/tracemalloc.html)
+
+The tracemalloc is capable of capturing memory allocations by line numbers.
+
+### Pros
+
+1. A part of standard library.
+1. Easy to use.
+
+### Cons
+
+1. Cannot get total use of memory.
+1. Requires extra coding.
+
+### [Sample - tracemalloc_test.py](./tracemalloc_test.py)
+
+```
+     1	import tracemalloc
+     2	
+     3	
+     4	tracemalloc.start()
+     5	
+     6	class MemEater:
+     7	    def __init__(self):
+     8	        self._dict = dict()
+     9	        self._all = ""
+    10	
+    11	    def eat(self, n: int):
+    12	        for i in range(n):
+    13	            self._dict[i] = str(i)
+    14	        self._all = " ".join(self._dict.values())
+    15	
+    16	
+    17	e = MemEater()
+    18	e.eat(12345)
+    19	
+    20	snapshot = tracemalloc.take_snapshot()
+    21	
+    22	top_stats = snapshot.statistics("lineno")
+    23	
+    24	print("[ Top 10 ]")
+    25	for stat in top_stats[:10]:
+    26	    print(stat)
+```
+
+#### [Sample Output - tracemalloc_out.txt](./tracemalloc_out.txt)
+
+```
+% python tracemalloc_test.py
+[ Top 10 ]
+tracemalloc_test.py:13: size=671 KiB, count=12346, average=56 B
+tracemalloc_test.py:12: size=165 KiB, count=12088, average=14 B
+tracemalloc_test.py:14: size=61.5 KiB, count=1, average=61.5 KiB
+tracemalloc_test.py:6: size=1220 B, count=9, average=136 B
+tracemalloc_test.py:11: size=156 B, count=2, average=78 B
+tracemalloc_test.py:7: size=68 B, count=1, average=68 B
+tracemalloc_test.py:8: size=56 B, count=2, average=28 B
+tracemalloc_test.py:17: size=24 B, count=1, average=24 B
+```
 
 ## [resources.getrusage](https://docs.python.org/3/library/resource.html#resource.getrusage)
 
