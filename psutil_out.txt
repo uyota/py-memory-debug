@@ -1,0 +1,3 @@
+% python psutil_test.py
+pmem(rss=10760192, vms=15769600, text=4096, data=4096, stack=131072)
+10764288

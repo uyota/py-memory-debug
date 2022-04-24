@@ -2,6 +2,7 @@
 
 ## Memory Profilers
 
+1. [psutil](#psutil)
 1. [tracemallloc](#tracemalloc)
 1. [resource.getrusage](#resourcesgetrusage)
 1. [sys.getsizeof](#sysgetsizeof)
@@ -10,6 +11,55 @@
 * FreeBSD 13.1-RELEASE
 * Python 3.8.12
 * `black` formatter
+
+## [psutil](https://psutil.readthedocs.io/en/latest/)
+
+The psutil library functions can report process information from the operating system such as CPU usage, various types of memory usage, and others.
+
+### Pros
+
+1. Easy to use.
+1. Find memory usage from operating system view.
+
+### Cons
+
+1. Cannot find where and how memory is used.
+1. Does not include swapped out memory.
+1. Similar to [resource.getrusage](#resourcesgetrusage).
+
+### [Sample - psutil_test.py](./psutil_test.py)
+
+```
+import psutil
+
+
+class MemEater:
+    def __init__(self):
+        self._dict = dict()
+        self._all = ""
+
+    def eat(self, n: int):
+        for i in range(n):
+            self._dict[i] = str(i)
+        self._all = " ".join(self._dict.values())
+
+
+e = MemEater()
+e.eat(12345)
+
+print(psutil.Process().memory_info())
+print(psutil.Process().memory_info().rss)
+# in bytes
+```
+
+#### [Sample Output - psutil_out.txt](./psutil_out.txt)
+
+```
+% python psutil_test.py
+pmem(rss=10760192, vms=15769600, text=4096, data=4096, stack=131072)
+10764288
+```
+
 
 ## [tracemalloc](https://docs.python.org/3/library/tracemalloc.html)
 
