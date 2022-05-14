@@ -1,0 +1,20 @@
+[mp-venv] % python -m memory_profiler memory-profiler_test.py
+Filename: memory-profiler_test.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     2   13.973 MiB   13.973 MiB           1       @profile
+     3                                             def __init__(self):
+     4   13.973 MiB    0.000 MiB           1           self._dict = dict()
+     5   13.973 MiB    0.000 MiB           1           self._all = ""
+
+
+Filename: memory-profiler_test.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7   13.973 MiB   13.973 MiB           1       @profile
+     8                                             def eat(self, n: int):
+     9   15.023 MiB    0.188 MiB       12346           for i in range(n):
+    10   15.023 MiB    0.863 MiB       12345               self._dict[i] = str(i)
+    11   15.023 MiB    0.000 MiB           1           self._all = " ".join(self._dict.values())

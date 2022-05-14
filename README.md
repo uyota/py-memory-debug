@@ -2,6 +2,7 @@
 
 ## Memory Profilers
 
+1. [memory-profiler](#memory-profiler)
 1. [psutil](#psutil)
 1. [tracemallloc](#tracemalloc)
 1. [resource.getrusage](#resourcesgetrusage)
@@ -11,6 +12,75 @@
 * FreeBSD 13.1-RELEASE
 * Python 3.8.12
 * `black` formatter
+
+## [memory-profiler](https://github.com/pythonprofilers/memory_profiler)
+
+The getsizeof function can report memory allocation line by line.
+
+
+### Pros
+
+1. Easy to use for small functions.
+
+### Cons
+
+1. Cannot get total use of memory.
+1. Requires adding decorator.
+1. May not be possible to add decorator to all functions.
+1. Deallocations are not discounted.
+
+### Installation
+
+``` bash
+% python3 -m venv mp-venv
+% source mp-venv/bin/activate
+% pip install memory_profiler
+```
+
+### [Sample - memory-profiler_test.py](./memory-profiler_test.py)
+
+```
+class MemEater:
+    @profile
+    def __init__(self):
+        self._dict = dict()
+        self._all = ""
+
+    @profile
+    def eat(self, n: int):
+        for i in range(n):
+            self._dict[i] = str(i)
+        self._all = " ".join(self._dict.values())
+
+
+e = MemEater()
+e.eat(12345)
+```
+
+#### [Sample Output - memory-profiler_out.txt](./memory-profiler_out.txt)
+
+```
+[mp-venv] % python -m memory_profiler memory-profiler_test.py
+Filename: memory-profiler_test.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     2   13.973 MiB   13.973 MiB           1       @profile
+     3                                             def __init__(self):
+     4   13.973 MiB    0.000 MiB           1           self._dict = dict()
+     5   13.973 MiB    0.000 MiB           1           self._all = ""
+
+
+Filename: memory-profiler_test.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7   13.973 MiB   13.973 MiB           1       @profile
+     8                                             def eat(self, n: int):
+     9   15.023 MiB    0.188 MiB       12346           for i in range(n):
+    10   15.023 MiB    0.863 MiB       12345               self._dict[i] = str(i)
+    11   15.023 MiB    0.000 MiB           1           self._all = " ".join(self._dict.values())
+```
 
 ## [psutil](https://psutil.readthedocs.io/en/latest/)
 
