@@ -2,6 +2,7 @@
 
 ## Memory Profilers
 
+1. [guppy/heapy](#guppyheapy)
 1. [memory-profiler](#memory-profiler)
 1. [psutil](#psutil)
 1. [tracemallloc](#tracemalloc)
@@ -12,6 +13,87 @@
 * FreeBSD 13.1-RELEASE
 * Python 3.8.12
 * `black` formatter
+
+## [Guppy/Heapy](https://github.com/zhuyifei1999/guppy3/)
+
+The heapy can report the amount of memory allocated by types.
+
+Unlike other memory profiling tool, heapy becomes more useful when
+a program defines it own types.
+
+
+### Pros
+
+1. Easy to use.
+
+### Cons
+
+1. Cannot find where and how memory is used.
+1. Requires extra coding.
+
+### Installation
+
+``` bash
+% python3 -m venv guppy-venv
+% source guppy-venv/bin/activate
+% pip install guppy3
+```
+
+### [Sample - guppy_test.py](./guppy_test.py)
+
+```
+from guppy import hpy
+
+hp = hpy()
+hp.setrelheap()
+
+
+class MemEater:
+    def __init__(self):
+        self._dict = dict()
+        self._all = ""
+
+    def eat(self, n: int):
+        for i in range(n):
+            self._dict[i] = str(i)
+        self._all = " ".join(self._dict.values())
+
+
+e = MemEater()
+e.eat(12345)
+
+print(hp.heap())
+print("*" * 80)
+print("Heap Size:", hp.heap().size)
+print("*" * 80)
+print("Most Allocated:\n", hp.heap()[0])
+```
+
+#### [Sample Output - getsizeof_out.txt](./getsizeof_out.txt)
+
+```
+[guppy-venv] % python guppy_test.py
+Partition of a set of 24546 objects. Total size = 859144 bytes.
+ Index  Count   %     Size   % Cumulative  % Kind (class / dict of class)
+     0  12345  50   359240  42    359240  42 str
+     1      2   0   327856  38    687096  80 dict (no owner)
+     2  12187  50   170620  20    857716 100 int
+     3      1   0      536   0    858252 100 type
+     4      1   0      332   0    858584 100 types.FrameType
+     5      1   0      192   0    858776 100 dict of type
+     6      2   0      136   0    858912 100 function
+     7      2   0       64   0    858976 100 types.GetSetDescriptorType
+     8      1   0       56   0    859032 100 dict of __main__.MemEater
+     9      2   0       52   0    859084 100 tuple
+<2 more rows. Type e.g. '_.more' to view.>
+********************************************************************************
+Heap Size: 859977
+********************************************************************************
+Most Allocated:
+ Partition of a set of 12347 objects. Total size = 360052 bytes.
+ Index  Count   %     Size   % Cumulative  % Kind (class / dict of class)
+     0  12347 100   360052 100    360052 100 str
+```
 
 ## [memory-profiler](https://github.com/pythonprofilers/memory_profiler)
 

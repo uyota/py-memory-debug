@@ -1,0 +1,21 @@
+[guppy-venv] % python guppy_test.py
+Partition of a set of 24546 objects. Total size = 859144 bytes.
+ Index  Count   %     Size   % Cumulative  % Kind (class / dict of class)
+     0  12345  50   359240  42    359240  42 str
+     1      2   0   327856  38    687096  80 dict (no owner)
+     2  12187  50   170620  20    857716 100 int
+     3      1   0      536   0    858252 100 type
+     4      1   0      332   0    858584 100 types.FrameType
+     5      1   0      192   0    858776 100 dict of type
+     6      2   0      136   0    858912 100 function
+     7      2   0       64   0    858976 100 types.GetSetDescriptorType
+     8      1   0       56   0    859032 100 dict of __main__.MemEater
+     9      2   0       52   0    859084 100 tuple
+<2 more rows. Type e.g. '_.more' to view.>
+********************************************************************************
+Heap Size: 859977
+********************************************************************************
+Most Allocated:
+ Partition of a set of 12347 objects. Total size = 360052 bytes.
+ Index  Count   %     Size   % Cumulative  % Kind (class / dict of class)
+     0  12347 100   360052 100    360052 100 str
