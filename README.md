@@ -2,6 +2,7 @@
 
 ## Memory Profilers
 
+1. [Memray](#memray)
 1. [guppy/heapy](#guppyheapy)
 1. [memory-profiler](#memory-profiler)
 1. [psutil](#psutil)
@@ -13,6 +14,59 @@
 * FreeBSD 13.1-RELEASE
 * Python 3.8.12
 * `black` formatter
+
+## [Memray](https://github.com/bloomberg/memray)
+
+A profiler that runs and examines from the outside of a program.
+The best choice among other techniques and easiest to use on Linux.
+Framegrah provides very visual way to show memory usage brake down
+among function calls.
+
+###  Pros
+
+1. Easy to use.
+1. No need to change target code.
+1. Framegraph gives quick and easy view of high memory users.
+1. Can profile C/C++ code.
+1. Interactive profileing, too.
+
+###  Cons
+
+1. Linux only.
+1. Need to boot up http server to view results.
+
+### [Installation](https://github.com/bloomberg/memray#installation)
+
+``` bash
+% python3 -m venv memray-venv
+% source memray-venv/bin/activate
+[memray-venv] % python3 -m pip install memray
+```
+
+### [How To Run](https://github.com/bloomberg/memray#usage)
+
+```
+% python3 -m memray run -o output.bin my_script.py arg1 arg2
+% python3 -m memray run -o output.bin -m my_module arg1 arg2
+```
+
+### [How To Display](https://github.com/bloomberg/memray#usage)
+
+```
+% python3 -m memray flame-graph output.bin
+```
+
+![Flame-graph View](https://github.com/bloomberg/memray/blob/main/docs/_static/images/flamegraph_example.png?raw=true)
+
+#### [Profile C/C++ Functions](https://github.com/bloomberg/memray#native-mode)
+
+The memray supports profiling C/C++ functions. Use `--native` mode.
+
+#### [Live Profiling](https://github.com/bloomberg/memray#native-mode)
+
+The memray supports realtime progilig with `--live` mode.
+You can see memory allocations by functions and by threads.
+
 
 ## [Guppy/Heapy](https://github.com/zhuyifei1999/guppy3/)
 
