@@ -1,5 +1,26 @@
 # Python Memory Debugging
 
+Python programs run on Python interpreter and Python also uses garbage
+collections.
+
+Python releases memory as an object is no longer referenced.
+Therefore, you don't really need to worry about memory leaks in general.
+
+However, there are times when memory usage is significantly higher than
+expected or memory usage keeps growing.   Then, you need to check
+few ways to make memory leaks in Python and also need to investigate
+where and how memory is used.
+
+While investigating [memory profilers](#memory-profilers) will help
+identifying and answering some of these questions.
+
+
+## Case Study
+
+1. [Cyclic Dependency](cyclic-dependency.md)
+1. [Sparse Memory Usage](sparse-memory-usage.md)
+
+
 ## Memory Profilers
 
 1. [Memray](#memray)
